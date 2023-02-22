@@ -44,8 +44,8 @@ window.onload = function() {
     function hideAvatarPage() {
         //$("#firstPage").hide();
         $("#avatarCreation").hide();
-        $("#game").show();
         $("#characterImg").show();
+        $("#game").show();
         createMap();
         setTimeout(function () { // basically da ne ustreli metka ob buttonPressu
             weAreInGame = true;
@@ -76,12 +76,12 @@ window.onload = function() {
 
         $("#ninjaImg").hover(
             function () {
-                $("#ninjaImg").attr("src", "https://art.pixilart.com/thumb/sr2d818a1f5d7d7.png");
+                //$("#ninjaImg").attr("src", "https://art.pixilart.com/thumb/sr2d818a1f5d7d7.png");
                 kunai.style.animation = "moveKunai 0.5s linear alternate";
 
             },
             function () {
-                $("#ninjaImg").attr("src", "https://art.pixilart.com/sr29975db92de0e.png");
+                //$("#ninjaImg").attr("src", "https://art.pixilart.com/sr29975db92de0e.png");
                 kunai.style.animation = "";
             });
 
@@ -211,8 +211,8 @@ window.onload = function() {
     const map = new Image();
     let mapX = 0;
     let mapY = -150;
-    let charX = 800; //offset za pravilni collision
-    let charY = 500;
+    let charX = 950; //offset za pravilni collision
+    let charY = 535;
 
     let collisionsMap = [];
     for(let i = 0; i < collisionsData.length; i += 100){
@@ -296,10 +296,10 @@ window.onload = function() {
         enemies.push(enemy);
         appendEnemy(enemyImage);
     }
-    function enemyAttack(enemy){
+    function enemyAttack(enemies){
 
     }
-    function enemyMove(enemy){
+    function enemyMove(enemies){
 
     }
 
@@ -394,7 +394,9 @@ window.onload = function() {
     //============================================================MOUSEMOVE========================================================================
 
     document.addEventListener("mousemove", function (event) {
-        updateDirection(event);
+        if(avatarClass !== "") {
+            updateDirection(event);
+        }
         //console.log(angle);
     });
 
@@ -657,5 +659,13 @@ window.onload = function() {
     coinSpin();  // coin spinning function
 
     //============================================================TEST========================================================================
+    function mainGame(){
 
+    }
+
+    function round(round){
+        switch(round){
+
+        }
+    }
 }

@@ -160,13 +160,15 @@ input[type = "submit"]:hover {
   =================================================== GAME PAGE ========================================================
  */
 #coinDiv {
-    padding-top: 25px;
-    float: right;
+    position: absolute;
+    left: 1300px;
+    padding-top: 20px;
     width: 25vw;
     height: 15vh;
     text-align: center;
     justify-content: center;
     display: flex;
+
 
 }
 #berryCoin {
@@ -182,7 +184,7 @@ input[type = "submit"]:hover {
 }
 #heartContainer {
     position: absolute;
-    left: 60vw;
+    left: 86vw;
     width: 10vw;
     text-align: center;
     justify-content: center;
@@ -214,12 +216,32 @@ input[type = "submit"]:hover {
     z-index: 4;
 }
 
+#minimap {
+    background-color: red;
+    position: fixed;
+    top: 74vh;
+    left: 150vh;
+    height: 25vh;
+    width: 15vw;
+    border: 1px solid white;
+    visibility: hidden;
+    z-index: 4;
+}
+
+
 #characterImg{
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 535px;
+    left: 950px;
     transform: translate(-50%, -50%);
     width: 70px;
     height: 70px;
     z-index: 3;
+    user-input: none;
+}
+
+#game{
+    z-index: 4;
+    position: fixed;
+    top: 0px;
 }
