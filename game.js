@@ -51,6 +51,7 @@ window.onload = function() {
             weAreInGame = true;
         }, 500);
         izberiClass(avatarClass);
+        fullScreen();
     }
 
     ninjaBt.onclick = function () { //                        CLASS BUTTONS FUNCTIONS...................................
@@ -463,6 +464,23 @@ window.onload = function() {
             }
         }
     });
+
+    //fullscreen
+    let fullscreen = false;
+    function fullScreen() {
+        if(!fullscreen) {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().then(() =>
+                    console.log("uspesen fullscreen"));
+            }
+        }else {
+            fullscreen = false;
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(() =>
+                    console.log("uspesno iz fullscreena"));
+            }
+        }
+    }
 
     document.addEventListener("keydown", function (event) {
         //odpre infotab
