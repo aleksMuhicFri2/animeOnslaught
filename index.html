@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NinjaWorld</title>
+    <link rel= "stylesheet" href= "stili.css">
+    <script src="game.js"></script>
+    <script src="collisionsData.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class = "body">
+<img class = "character" id = "characterImg" src = "">
+<div id= "firstPage">
+    <img id= "img1" src="https://images7.alphacoders.com/116/thumb-1920-1164041.png" alt= "image lost">
+    <div class="container">
+        <h1 style="color: black; font-size: 50px">Login</h1>
+        <label for="usernameInput"></label><input id="usernameInput" type="text" placeholder="Username">
+        <label for="passwordInput"></label><input id="passwordInput" type="password" placeholder="Password">
+        <input id="submit" type="button" value="Submit">
+    </div>
+</div>
+
+<div id= "avatarCreation">
+    <p id= "welcome">NINJAWORLD</p>
+    <img class ="button-img" id= "ninjaImg" src="https://art.pixilart.com/sr29975db92de0e.png" alt= "image lost">
+    <img class ="button-img" id= "sumoImg" src= "https://art.pixilart.com/sr214371b036dc3.png" alt= "image lost">
+    <img class ="button-img" id= "luffyImg" src= "slike/LuffyFront.png" alt= "image lost">
+    <img id= "wizardFireball" src= "slike/WizardFireball.png" alt= "image lost">
+    <img id= "ninjaKunai" src= "https://art.pixilart.com/thumb/sr25a97730f9c10.png" alt= "image lost">
+    <div id= "buttonContainer1">
+        <label for="avatarNameInput"></label><input id= "avatarNameInput" placeholder= "Type in your in-game username">
+        <p id= "chooseClass">Choose your Class:</p>
+        <button class="classPick" id="ninjaBt"> NINJA </button>
+        <button class="classPick" id="sumoBt"> SUMO </button>
+
+        <button class="classPick" id="wizardBt"> WIZARD </button>
+    </div>
+</div>
+
+<canvas></canvas>
+<div id= "game">
+    <div id= "coinDiv">
+        <p id= "coinCount"></p>
+        <img id= "berryCoin" src= "https://art.pixilart.com/thumb/sr2b3a05f028aab.png" alt= "image lost">
+    </div>
+    <div id= "heartContainer">
+        <img id= "heart0" src= "https://art.pixilart.com/sr239a612452354.png" alt= "image lost">
+        <img id= "heart1" src= "https://art.pixilart.com/sr239a612452354.png" alt= "image lost">
+        <img id= "heart2" src= "https://art.pixilart.com/sr239a612452354.png" alt= "image lost">
+    </div>
+    <div id= "infoTab">
+
+    </div>
+</div>
+</body>
+</html>

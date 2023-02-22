@@ -1,0 +1,225 @@
+.body{
+    overflow: hidden;
+    background-color: black;
+}
+
+.background {
+    position: absolute;
+    top: -2000px;
+    left: -4040px;
+    width: 10000px;
+    height: 5000px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.container {
+    position: absolute;
+    top: 35vh;
+    left: 45vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+}
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 5px #ccc;
+}
+input[type="button"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+input[type = "submit"]:hover {
+    background-color: #3e8e41;
+}
+#img1{
+    position : relative;
+    width: 100vw;
+    height: 95vh;
+}
+/*
+  ==================================================== AVATAR CREATION PAGE ============================================
+ */
+
+#ninjaImg {
+    position: absolute;
+    height: 23vh;
+    width: 23vh;
+    top: 20vh;
+    left: 20vh;
+}
+#ninjaKunai {
+    position: absolute;
+    height: 17vh;
+    width: 17vh;
+    top: 28vh;
+    left: 32vh;
+    visibility: hidden;
+}
+@keyframes moveKunai {
+    0% {
+        visibility: visible;
+        left: 32vh;
+    }
+    100% {
+        left: 55vw;
+    }
+}
+
+#sumoImg{
+    position: absolute;
+    height: 20vh;
+    width: 20vh;
+    top: 45vh;
+    left: 35vw;
+}
+#luffyImg {
+    position: absolute;
+    height: 20vh;
+    width: 20vh;
+    top: 65vh;
+    left: 25vh;
+}
+
+#wizardFireball {
+    position: absolute;
+    height: 23vh;
+    width: 23vh;
+    top: 67vh;
+    left: 30vh;
+    visibility: hidden;
+}
+@keyframes moveFireball{
+    0% {
+        left: 35vh;
+        visibility: visible;
+    }
+    100% {
+        left: 40vw;
+        visibility: visible;
+    }
+}
+
+#welcome{
+    position: absolute;
+    color: white;
+    font-size: 80px;
+    top: -5vh;
+    left: 35vw;
+}
+#buttonContainer1 {
+    position:absolute;
+    top: 350px;
+    left: 1000px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.classPick{
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    height: 70px;
+    width: 250%;
+    margin-bottom: 10px;
+    border: 1px solid white;
+}
+.classPick:hover{
+    font-weight: bold;
+    background-color: white;
+    color: black;
+}
+#avatarNameInput {
+    height: 30px;
+}
+#chooseClass{
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+.button-img {
+    cursor: pointer;
+}
+/*
+  =================================================== GAME PAGE ========================================================
+ */
+#coinDiv {
+    padding-top: 25px;
+    float: right;
+    width: 25vw;
+    height: 15vh;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+
+}
+#berryCoin {
+    height: 64px;
+    width: 64px;
+    margin-left: 10px;
+}
+#coinCount {
+    margin-top: 20px;
+    color: white;
+    text-align: right;
+    font-size: 25px;
+}
+#heartContainer {
+    position: absolute;
+    left: 60vw;
+    width: 10vw;
+    text-align: center;
+    justify-content: center;
+}
+#heart0, #heart1, #heart2 {
+    height: 100px;
+    width: 100px;
+    margin-left : -50px;
+}
+@keyframes heartJump {
+    0% {
+        transform: translateY(0);
+    }
+    95% {
+        transform: translateY(-3px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+#infoTab {
+    position: absolute;
+    top: 2vh;
+    left: 2vh;
+    height: 40vh;
+    width: 30vw;
+    border: 1px solid white;
+    visibility: hidden;
+    z-index: 4;
+}
+
+#characterImg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    z-index: 3;
+}
