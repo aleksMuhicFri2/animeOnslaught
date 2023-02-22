@@ -3,7 +3,6 @@ window.onload = function() {
     $("#avatarCreation").show();
     $("#game").hide();
     $("#characterImg").hide();
-    $("#gameContainer").hide();
 
 
 //============================================================KONSTANTE========================================================================
@@ -27,7 +26,6 @@ window.onload = function() {
     let avatarClass = "";
     let avatarName = "";
     let int1;
-    let luffyAnimationInterval;
     let weAreInGame = false;
 
 //================================================= LOGIN PAGE ========================================================
@@ -38,7 +36,6 @@ window.onload = function() {
         $(document).ready(function () {
             $("#firstPage").hide();
             $("#avatarCreation").show();
-            //$("#game").hide();
         });
     }
 
@@ -49,10 +46,9 @@ window.onload = function() {
         $("#avatarCreation").hide();
         $("#game").show();
         $("#characterImg").show();
-        $("#gameContainer").show();
         createMap();
         setTimeout(function () { // basically da ne ustreli metka ob buttonPressu
-            weAreInGame = true
+            weAreInGame = true;
         }, 500);
         izberiClass(avatarClass);
     }
@@ -102,6 +98,8 @@ window.onload = function() {
             clearInterval(int1);
         });
 
+
+        let luffyAnimationInterval;
         let luffyAnimationIndex = 0;
         let luffyStretchImages = ["slike/LuffyFront.png", "slike/LuffyStretchNeck1.png", "slike/LuffyStretchNeck2.png", "slike/LuffyStretchNeck3.png", "slike/LuffyStretchNeck4.png",
             "slike/LuffyStretchNeck3.png", "slike/LuffyStretchNeck4.png", "slike/LuffyStretchNeck3.png", "slike/LuffyStretchNeck2.png", "slike/LuffyStretchNeck1.png",
@@ -195,7 +193,7 @@ window.onload = function() {
             missileType = "shuriken";
         }
         if (avatarClass === "sumo") {
-            arrayAnimacij = sumoAnimation;
+            arrayAnimacij = gojoAnimation;
             characterImg.src = arrayAnimacij[0];
             missileType = "shockWave";
         }
@@ -210,8 +208,8 @@ window.onload = function() {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
     const map = new Image();
-    let mapX = -705;
-    let mapY = -1150;
+    let mapX = 0;
+    let mapY = -150;
     let charX = 800; //offset za pravilni collision
     let charY = 500;
 
@@ -264,7 +262,7 @@ window.onload = function() {
         }
     }
 
-//===============================================================ENEMMIES===============================================================
+//===============================================================ENEMIES===============================================================
     let enemies = [];
     class Enemy {
         posX; //to je trenutna pozicija X missila
