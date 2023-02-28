@@ -209,14 +209,14 @@ window.onload = function() {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
     const map = new Image();
-    let mapX = 0;
-    let mapY = -150;
-    let charX = 800; //offset za pravilni collision
-    let charY = 500;
+    let mapX = -200;
+    let mapY = -200;
+    let charX = 620; //offset za pravilni collision
+    let charY = 450;
 
     let collisionsMap = [];
-    for(let i = 0; i < collisionsData.length; i += 100){
-        collisionsMap.push(collisionsData.slice(i, 100 + i));
+    for(let i = 0; i < collisionsData.length; i += 60){
+        collisionsMap.push(collisionsData.slice(i, 60 + i));
     }
 
     class Boundary {
@@ -234,25 +234,32 @@ window.onload = function() {
     const boundaries = []; // kje so collisioni
     collisionsMap.forEach((row, i) => {
         row.forEach((symbol, j) => {
-            if(symbol === 2032){
+            if(symbol === 832){
                 boundaries.push(new Boundary({position: {
-                        x: j * 48 + mapX,
-                        y: i * 48 + mapY
+                        x: j * 32 + mapX,
+                        y: i * 32 + mapY
                     }}))
             }})
     })
 
-    function checkForCollision() {
-        let amIHittingABoundary = false;
-        console.log(amIHittingABoundary)
+    function checkForCollision() { // pomoje dela zdej idk
+        let hittingWall = false;
         boundaries.forEach(boundary => {
             if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
                 charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48) {
-                console.log("collision")
+                console.log("collision");
+                if(!hittingWall){
+                    hittingWall = true;
+                    return hittingWall;
+                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
+                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48)) {
+                    hittingWall = false;
+                }
             }
         })
-        return amIHittingABoundary;
+        return hittingWall;
     }
+
 
     function createMap(){
         canvas.height = window.innerHeight * 2;
@@ -418,6 +425,7 @@ window.onload = function() {
                     updateAnimationAndMove(keyA, keyS, keyW, keyD);
                     updateDirection();
                     checkForCollision();
+                    console.log(checkForCollision());
                     boundaries.forEach(function(boundary){
                         boundary.draw();
                     })
@@ -427,40 +435,36 @@ window.onload = function() {
             //console.log("keyA: " + keyA + ", keyS: " + keyS + ", keyW: " + keyW + ", keyD: " + keyD)// moves character with WASD
             //razni keydowni
             if (event.key === "a") {
-                if (!keyA) {
                     if(checkForCollision()){
                         keyA = false;
                         mapX += 4;
+                        console.log("z desne");
                     }
                     keyA = true;
                 }
-            }
             if (event.key === "d") {
-                if (!keyD) {
                     if(checkForCollision()){
                         keyD = false;
                         mapX -= 4;
+                        console.log("z leve");
                     }
                     keyD = true;
                 }
-            }
             if (event.key === "w") {
-                if (!keyW) {
                     if(checkForCollision()){
                         keyW = false;
                         mapY += 4;
+                        console.log("s spodaj");
                     }
                     keyW = true;
                 }
-            }
             if (event.key === "s") {
-                if (!keyS) {
                     if(checkForCollision()){
                         keyS = false;
                         mapY -= 4;
+                        console.log("z zgoraj");
                     }
                     keyS = true;
-                }
             }
         }
     });
