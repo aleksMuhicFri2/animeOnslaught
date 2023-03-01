@@ -215,8 +215,8 @@ window.onload = function() {
     let charY = 500;
 
     let collisionsMap = [];
-    for(let i = 0; i < collisionsData.length; i += 100){
-        collisionsMap.push(collisionsData.slice(i, 100 + i));
+    for(let i = 0; i < collisionsData.length; i += 60){
+        collisionsMap.push(collisionsData.slice(i, 60 + i));
     }
 
     class Boundary {
@@ -234,7 +234,7 @@ window.onload = function() {
     const boundaries = []; // kje so collisioni
     collisionsMap.forEach((row, i) => {
         row.forEach((symbol, j) => {
-            if(symbol === 2032){
+            if(symbol === 832){
                 boundaries.push(new Boundary({position: {
                         x: j * 48 + mapX,
                         y: i * 48 + mapY
@@ -242,16 +242,22 @@ window.onload = function() {
             }})
     })
 
-    function checkForCollision() {
-        let amIHittingABoundary = false;
-        console.log(amIHittingABoundary)
+    function checkForCollision() { // pomoje dela zdej idk
+        let hittingWall = false;
         boundaries.forEach(boundary => {
             if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
                 charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48) {
-                console.log("collision")
+                console.log("collision");
+                if(!hittingWall){
+                    hittingWall = true;
+                    return hittingWall;
+                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
+                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48)) {
+                    hittingWall = false;
+                }
             }
         })
-        return amIHittingABoundary;
+        return hittingWall;
     }
 
     function createMap(){
@@ -410,6 +416,7 @@ window.onload = function() {
     })
 
 //============================================================KEYDOWN========================================================================
+
     document.addEventListener("keydown", function (event) {
         if (event.key === "a" || event.key === "d" || event.key === "s" || event.key === "w") {
             //seta interval za updatanje pozicije
@@ -465,37 +472,6 @@ window.onload = function() {
         }
     });
 
-    //fullscreen
-    let fullscreen = false;
-    function fullScreen() {
-        if(!fullscreen) {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen().then(() =>
-                    console.log("uspesen fullscreen"));
-            }
-        }else {
-            fullscreen = false;
-            if (document.exitFullscreen) {
-                document.exitFullscreen().then(() =>
-                    console.log("uspesno iz fullscreena"));
-            }
-        }
-    }
-
-    document.addEventListener("keydown", function (event) {
-        //odpre infotab
-        if (event.key === 'i') {
-            infoTab.style.visibility = "visible";
-        }
-    });
-
-    document.addEventListener("keyup", function (event) {
-        //zapre infotab
-        if (event.key === 'i') {
-            infoTab.style.visibility = "hidden";
-        }
-    });
-
 //============================================================KEYUP========================================================================
 
     document.addEventListener("keyup", function (event) {
@@ -522,8 +498,7 @@ window.onload = function() {
         }
     });
 
-
-//============================================================OBRACANJE IN PREMIKANJE CHARACTERJA========================================================================
+    //============================================================OBRACANJE IN PREMIKANJE CHARACTERJA========================================================================
 
     function updateDirection(event) {
         if (event) {
@@ -620,6 +595,39 @@ window.onload = function() {
     function spremeniAnimacijo(animacija) {
         characterImg.src = arrayAnimacij[animacija];
     }
+
+    // ==========================================================FULLSCREEN & INFOTAB==================================================================
+
+    //fullscreen
+    let fullscreen = false;
+    function fullScreen() {
+        if(!fullscreen) {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().then(() =>
+                    console.log("uspesen fullscreen"));
+            }
+        }else {
+            fullscreen = false;
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(() =>
+                    console.log("uspesno iz fullscreena"));
+            }
+        }
+    }
+
+    document.addEventListener("keydown", function (event) {
+        //odpre infotab
+        if (event.key === 'i') {
+            infoTab.style.visibility = "visible";
+        }
+    });
+
+    document.addEventListener("keyup", function (event) {
+        //zapre infotab
+        if (event.key === 'i') {
+            infoTab.style.visibility = "hidden";
+        }
+    });
 
 //============================================================HEARTJUMP========================================================================
 
