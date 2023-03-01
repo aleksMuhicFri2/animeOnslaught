@@ -205,7 +205,7 @@ window.onload = function() {
         }
     }
 
-//=======================================================DODAJANJE OZADJA==================================================================
+//=======================================================DODAJANJE OZADJA IN COLLISIONS==================================================================
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
     const map = new Image();
@@ -265,41 +265,95 @@ window.onload = function() {
 
 //===============================================================ENEMIES===============================================================
     let enemies = [];
+    let pozicije = [];
+
+
     class Enemy {
-        posX; //to je trenutna pozicija X missila
-        posY; //to je trenutna pozicija Y missila
+        interval;
+        currentHP;
         constructor(HP, attack, Xp, type, src, top, left) {
             this.HP = HP;
             this.attack = attack;
             this.Xp = Xp;
             this.type = type;
             this.src = src;
-            this.top = top;   //zacetna Y
-            this.left = left; //zacetna X
             this.posY = top;
             this.posX = left;
         }
     }
     function appendEnemy(enemy) {
-        document.body.appendChild(enemy);
+        ctx.drawImage(enemy, 600, 600, 150, 150);
+        console.log("uspesno nr.2");
     }
-    function createAndPlaceEnemy(enemyImage) {
+
+    function placeEnemy(enemyImage) {//enemy object
+        console.log(`${enemyImage.counter} , ${enemyImage.type} , ${enemyImage.src} , ${enemyImage.top} , ${enemyImage.left} , ${enemyImage.angle} , ${enemyImage.user} ,`)
         let enemy = document.createElement("img");
-        enemy.style.width = "60px";
-        enemy.style.width = "60px";
+        enemy.style.width = "16000px";
+        enemy.style.width = "16000px";
         enemy.style.position = "absolute";
         enemy.id = enemyImage.type + counter;
-        enemy.src = enemyImage.src;
+        counter++;
+        //doloci zacetno rotacijo glede na pozicijo characterja
+        enemy.src = enemyImage.src[0];
         enemy.style.top = enemyImage.top + "px";
         enemy.style.left = enemyImage.left + "px";
         enemy.style.zIndex = "3";
-        enemies.push(enemy);
-        appendEnemy(enemyImage);
+        enemy.draggable = false;
+        enemy.style.userSelect = "none";
+        enemies.push(enemyImage);
+        appendEnemy(enemy);
+        enemyImage.interval = setInterval(function () {
+            enemyUpdate(enemy, enemyImage);
+        }, 30);
+        console.log("uspesno!")
     }
-    function enemyAttack(enemies){
+
+    function enemyUpdate(enemy){
+        //enemyAttack();
+        //enemyMove();
+    }
+
+    function enemyAttack(enemy){
 
     }
-    function enemyMove(enemies){
+    function enemyMove(enemy, enemyObject, char){
+        let razdalja = vrniRazdaljo(enemy.left, char.posX, enemy.top, char.posY);
+        console.log(razdalja);
+            const distance = 15;
+// Convert the direction from degrees to radians
+            const radians = enemyObject.angle * (Math.PI / 180);
+// Calculate the horizontal and vertical components of the movement
+            const deltaX = distance * Math.cos(radians);
+            const deltaY = distance * Math.sin(radians);
+// Get the current position of the element
+            enemyObject.posX += deltaX;
+            enemyObject.posY += deltaY;
+
+            enemy.style.left = enemyObject.posX + "px";
+            enemy.style.top = enemyObject.posY + "px";
+            clearInterval(enemyObject.interval);
+
+    }
+
+    let wolfAnimation = ["https://art.pixilart.com/sr2730a44e205f3.png", "https://art.pixilart.com/sr2f140e6e64136.png", "https://art.pixilart.com/sr24f914a0a2f3c.png",
+    "https://art.pixilart.com/sr28f9cd29b64fe.png", "https://art.pixilart.com/sr28847e13a2664.png", "https://art.pixilart.com/sr24646bc9ebf28.png",
+    "https://art.pixilart.com/sr25d555b835f03.png", "https://art.pixilart.com/sr20a7dfb496542.png", "https://art.pixilart.com/sr2e43e7faadec0.png",
+    "https://art.pixilart.com/sr2bdd3f4e86775.png", "https://art.pixilart.com/sr2f1a7f474a880.png", "https://art.pixilart.com/sr231f9f7e0110c.png"]
+
+    function createAnEnemy(HP, attack, XP, type, animations, top, left){
+        let prvi = new Enemy(250, 20, 10, "wolf", wolfAnimation, 600, 600);
+        placeEnemy(prvi);
+    }
+
+    function premakniEnemy(x, y){
+        enemies.forEach(function(enemy){
+            enemy.posY += y;
+            enemy.posX += x;
+        })
+    }
+
+    function dolociSmerEnemyev(){
 
     }
 
@@ -362,6 +416,7 @@ window.onload = function() {
         image.interval = setInterval(function () {
             missileFly(missile, image, 250);
         }, 30);
+        createAnEnemy();
     }
 
     function missileFly(missile, image, range) {
@@ -557,7 +612,8 @@ window.onload = function() {
 
     //funkcija update, ki glede na pritisnjene keye spreminja animacijo in pozicijo
     function updateAnimationAndMove(keyA, keyS, keyW, keyD) {
-        //console.log("character log" + charX + ", " +  charY);
+        let x = 0;//za premikanje slik z ozadjem
+        let y = 0;//enako
         animationCooldown++;
         if (animationCooldown === 5) {
             animationCooldown = 0;
@@ -569,11 +625,15 @@ window.onload = function() {
                     boundary.position.y -= 3;
                 })
                 mapY -= 3;
+                charY -= 3;
+                y -= 3;
             } else {
                 boundaries.forEach(boundary => {
                     boundary.position.y -= 4;
                 })
                 mapY -= 4;
+                charY -= 4;
+                y -= 4;
             }
         }
         if (keyW) {
@@ -582,11 +642,15 @@ window.onload = function() {
                     boundary.position.y += 3;
                 })
                 mapY += 3;
+                charY += 3;
+                y += 3;
             } else {
                 boundaries.forEach(boundary => {
                     boundary.position.y += 4;
                 })
                 mapY += 4;
+                charY += 4;
+                y += 4;
             }
         }
         if (keyD) {
@@ -595,11 +659,15 @@ window.onload = function() {
                     boundary.position.x -= 3;
                 })
                 mapX -= 3;
+                charX -= 3;
+                x -= 3;
             } else {
                 boundaries.forEach(boundary => {
                     boundary.position.x -= 4;
                 })
                 mapX -= 4;
+                charX -= 4;
+                x -= 4;
             }
         }
         if (keyA) {
@@ -608,14 +676,23 @@ window.onload = function() {
                     boundary.position.x += 3;
                 })
                 mapX += 3;
+                charX += 3;
+                x += 3;
             } else {
                 boundaries.forEach(boundary => {
                     boundary.position.x += 4;
                 })
                 mapX += 4;
+                charX += 4;
+                x += 4;
             }
         }
         ctx.drawImage(map, mapX, mapY);
+        premakniEnemy(x, y);
+        enemies.forEach(function(enemy){
+            let src = dolociSmerEnemyev();
+            ctx.drawImage(enemy.src, enemy.posX, enemy.posY, 150, 150);
+        })
     }
 
     //funkcija ki characterju spreminja animacijo
@@ -624,7 +701,6 @@ window.onload = function() {
     }
 
 //============================================================HEARTJUMP========================================================================
-
 
     function heartJump() {
         setTimeout(function () {
