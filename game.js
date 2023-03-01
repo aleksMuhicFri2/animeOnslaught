@@ -211,54 +211,9 @@ window.onload = function() {
     const map = new Image();
     let mapX = 0;
     let mapY = -150;
-    let charX = 950; //offset za pravilni collision
+    let charX = 950;
     let charY = 530;
 
-    let collisionsMap = [];
-    for(let i = 0; i < collisionsData.length; i += 60){
-        collisionsMap.push(collisionsData.slice(i, 60 + i));
-    }
-
-    class Boundary {
-        constructor({position}){
-            this.position = position;
-            this.width = 32;
-            this.height = 32;
-        }
-        draw() {
-            ctx.fillStyle = "red";
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        }
-    }
-
-    const boundaries = []; // kje so collisioni
-    collisionsMap.forEach((row, i) => {
-        row.forEach((symbol, j) => {
-            if(symbol === 832){
-                boundaries.push(new Boundary({position: {
-                        x: j * 32 + mapX,
-                        y: i * 32 + mapY
-                    }}))
-            }})
-    })
-
-    function checkForCollision() { // pomoje dela zdej idk
-        let hittingWall = false;
-        boundaries.forEach(boundary => {
-            if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 32 &&
-                charY + 30 >= boundary.position.y && charY <= boundary.position.y + 32) {
-                console.log("collision");
-                if(!hittingWall){
-                    hittingWall = true;
-                    return hittingWall;
-                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 32 &&
-                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 32)) {
-                    hittingWall = false;
-                }
-            }
-        })
-        return hittingWall;
-    }
 
     function createMap(){
         canvas.height = window.innerHeight * 2;
@@ -480,34 +435,22 @@ window.onload = function() {
                 intervalUpdate = setInterval(function () {
                     updateAnimationAndMove(keyA, keyS, keyW, keyD);
                     updateDirection();
-                    checkForCollision();
                 }, 20);
                 updateP = true;
             }
             //console.log("keyA: " + keyA + ", keyS: " + keyS + ", keyW: " + keyW + ", keyD: " + keyD)// moves character with WASD
             //razni keydowni
             if (event.key === "a") {
-                if (!keyA) {
-                    keyA = !checkForCollision();
-                }
+                    keyA = true;
             }
             if (event.key === "d") {
-                if (!keyD) {
-                    console.log(mapX);
-                    keyD = !checkForCollision();
-                }
+                    keyD = true;
             }
             if (event.key === "w") {
-                if (!keyW) {
-                    console.log(mapY);
-                    keyW = !checkForCollision();
-                }
+               keyW = true;
             }
             if (event.key === "s") {
-                if (!keyS) {
-                    console.log(mapY);
-                    keyS = !checkForCollision();
-                }
+                keyS = true;
             }
         }
     });
@@ -611,68 +554,44 @@ window.onload = function() {
             animationIndex++;
         }
         if (keyS) {
-            if(!checkForCollision() && mapY > -680){
+            if(mapY > -680){
             if (keyA || keyD) {
-                boundaries.forEach(boundary => {
-                    boundary.position.y -= 3;
-                })
                 mapY -= 3;
                 y -= 3;
             } else{
-                boundaries.forEach(boundary => {
-                    boundary.position.y -= 4;
-                })
                 mapY -= 4;
                 y -= 4;
                 }
             }
         }
         if (keyW) {
-            if (!checkForCollision() && mapY < 490) {
+            if (mapY < 490) {
             if (keyA || keyD) {
-                    boundaries.forEach(boundary => {
-                        boundary.position.y += 3;
-                    })
                     mapY += 3;
                     y += 3;
                 } else {
-                    boundaries.forEach(boundary => {
-                        boundary.position.y += 4;
-                    })
                     mapY += 4;
                     y += 4;
                 }
             }
         }
         if (keyD) {
-            if (!checkForCollision() && mapX > -900) {
+            if (mapX > -900) {
                 if (keyS || keyW) {
-                    boundaries.forEach(boundary => {
-                        boundary.position.x -= 3;
-                    })
                     mapX -= 3;
                     x -= 3;
                 } else {
-                    boundaries.forEach(boundary => {
-                        boundary.position.x -= 4;
-                    })
                     mapX -= 4;
                     x -= 4;
                 }
             }
         }
         if (keyA) {
-            if (!checkForCollision() && mapX < 900) {
+            if (mapX < 900) {
             if (keyS || keyW) {
-                boundaries.forEach(boundary => {
-                    boundary.position.x += 3;
-                })
                 mapX += 3;
                 x += 3;
             } else {
-                boundaries.forEach(boundary => {
-                    boundary.position.x += 4;
-                })
                 mapX += 4;
                 x += 4;
                 }
@@ -682,7 +601,7 @@ window.onload = function() {
         premakniEnemy(x, y);
         enemies.forEach(function(enemy){
             let src = dolociSmerEnemyev();
-            ctx.drawImage(enemy.src, enemy.posX, enemy.posY, 150, 150);
+            ctx.drawImage(src, enemy.posX, enemy.posY, 150, 150);
         })
     }
 
