@@ -242,16 +242,22 @@ window.onload = function() {
             }})
     })
 
-    function checkForCollision() {
-        let amIHittingABoundary = false;
-        console.log(amIHittingABoundary)
+    function checkForCollision() { // pomoje dela zdej idk
+        let hittingWall = false;
         boundaries.forEach(boundary => {
             if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
                 charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48) {
-                console.log("collision")
+                console.log("collision");
+                if(!hittingWall){
+                    hittingWall = true;
+                    return hittingWall;
+                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
+                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48)) {
+                    hittingWall = false;
+                }
             }
         })
-        return amIHittingABoundary;
+        return hittingWall;
     }
 
     function createMap(){
