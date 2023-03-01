@@ -243,5 +243,9 @@ input[type = "submit"]:hover {
 #game{
     z-index: 4;
     position: fixed;
-    top: 0px;
+    top: 0;
+}
+#backgroundImg {
+    height: 1500px;
+    width: 2000px;
 }

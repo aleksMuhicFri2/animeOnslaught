@@ -46,7 +46,6 @@ window.onload = function() {
         $("#avatarCreation").hide();
         $("#characterImg").show();
         $("#game").show();
-        createMap();
         setTimeout(function () { // basically da ne ustreli metka ob buttonPressu
             weAreInGame = true;
         }, 500);
@@ -203,23 +202,11 @@ window.onload = function() {
     }
 
 //=======================================================DODAJANJE OZADJA IN COLLISIONS==================================================================
-    const canvas = document.querySelector('canvas');
-    const ctx = canvas.getContext('2d');
-    const map = new Image();
     let mapX = 0;
     let mapY = -150;
     let charX = 950;
     let charY = 530;
 
-
-    function createMap(){
-        canvas.height = window.innerHeight * 2;
-        canvas.width = window.innerWidth * 2;
-        map.src = "slike/tiled.png"
-        map.onload = () => {
-            ctx.drawImage(map, mapX, mapY);
-        }
-    }
 
 //===============================================================ENEMIES===============================================================
     let enemies = [];
@@ -241,7 +228,7 @@ window.onload = function() {
     }
     function appendEnemy(enemy) {
         //doloci random iz pozicij za x in y
-        ctx.drawImage(enemy, 600, 600, 150, 150);
+       // ctx.drawImage(enemy, 600, 600, 150, 150);
         console.log("uspesno nr.2");
     }
 
@@ -631,11 +618,11 @@ window.onload = function() {
                 }
             }
         }
-        ctx.drawImage(map, mapX, mapY);
+        //ctx.drawImage(map, mapX, mapY);
         premakniEnemy(x, y);
         enemies.forEach(function(enemy){
             let src = dolociSmerEnemyev();
-            ctx.drawImage(src, enemy.posX, enemy.posY, 150, 150);
+            //ctx.drawImage(src, enemy.posX, enemy.posY, 150, 150);
         })
     }
 
