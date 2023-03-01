@@ -128,9 +128,6 @@ window.onload = function() {
     });
 
 
-
-
-
     //============================================== GAME PAGE ==========================================================================
     //===================================================================================================================================
     //===================================================================================================================================
@@ -226,23 +223,24 @@ window.onload = function() {
 
 //===============================================================ENEMIES===============================================================
     let enemies = [];
-    let pozicije = [];
-
+    let pozicije = []; //doloci spawn pointe za enemye
 
     class Enemy {
         interval;
         currentHP;
-        constructor(HP, attack, Xp, type, src, top, left) {
+        animation;
+        constructor(HP, attack, type, src, top, left) {
             this.HP = HP;
             this.attack = attack;
-            this.Xp = Xp;
             this.type = type;
             this.src = src;
             this.posY = top;
             this.posX = left;
+
         }
     }
     function appendEnemy(enemy) {
+        //doloci random iz pozicij za x in y
         ctx.drawImage(enemy, 600, 600, 150, 150);
         console.log("uspesno nr.2");
     }
@@ -250,8 +248,8 @@ window.onload = function() {
     function placeEnemy(enemyImage) {//enemy object
         console.log(`${enemyImage.counter} , ${enemyImage.type} , ${enemyImage.src} , ${enemyImage.top} , ${enemyImage.left} , ${enemyImage.angle} , ${enemyImage.user} ,`)
         let enemy = document.createElement("img");
-        enemy.style.width = "16000px";
-        enemy.style.width = "16000px";
+        enemy.style.width = "160px";
+        enemy.style.width = "160px";
         enemy.style.position = "absolute";
         enemy.id = enemyImage.type + counter;
         counter++;
@@ -271,8 +269,9 @@ window.onload = function() {
     }
 
     function enemyUpdate(enemy){
-        //enemyAttack();
-        //enemyMove();
+        enemyAttack();
+        enemyMove();
+
     }
 
     function enemyAttack(enemy){
@@ -303,7 +302,7 @@ window.onload = function() {
         "https://art.pixilart.com/sr2bdd3f4e86775.png", "https://art.pixilart.com/sr2f1a7f474a880.png", "https://art.pixilart.com/sr231f9f7e0110c.png"]
 
     function createAnEnemy(HP, attack, XP, type, animations, top, left){
-        let prvi = new Enemy(250, 20, 10, "wolf", wolfAnimation, 600, 600);
+        let prvi = new Enemy(250, 20, "wolf", wolfAnimation, 600, 600);
         placeEnemy(prvi);
     }
 
@@ -314,8 +313,35 @@ window.onload = function() {
         })
     }
 
-    function dolociSmerEnemyev(){
+    function dolociSmerEnemyev(enemy){
 
+    }
+
+    function updateDirectionEnemy(enemy) {
+        const angle = returnAngle(enemy);
+        if (angle < 45 && angle > -45) {
+            animirajEnemy(enemy, 3 + enemy.animation % 3);
+        }
+        if (angle > 45 && angle < 135) {
+            animirajEnemy(enemy, enemy.animation % 3);
+        }
+        if (angle > 135 && angle < 180 || angle > -180 && angle < -135) {
+            animirajEnemy(enemy, 9 + enemy.animation % 3);
+        }
+        if (angle < -45 && angle > -135) {
+            animirajEnemy(enemy, 6 + enemy.animation % 3);
+        }
+        //console.log("Cursor location: " + cursorX + ", " + cursorY);
+    }
+
+    //returna angle med cursorjem in characterjem
+    function returnAngleEnemy(enemy) {
+        const xDiff = enemy.posX - charX;
+        const yDiff = enemy.posY = charY;
+        return Math.atan2(yDiff, xDiff) * 180 / Math.PI;
+    }
+
+    function animirajEnemy(enemy, enemyImg, num){
     }
 
 //===============================================================IZSTRELKI==============================================================
@@ -557,9 +583,11 @@ window.onload = function() {
             if(mapY > -680){
             if (keyA || keyD) {
                 mapY -= 3;
+                charY += 3;
                 y -= 3;
             } else{
                 mapY -= 4;
+                charY += 4;
                 y -= 4;
                 }
             }
@@ -568,9 +596,11 @@ window.onload = function() {
             if (mapY < 490) {
             if (keyA || keyD) {
                     mapY += 3;
+                    charY -= 3;
                     y += 3;
                 } else {
                     mapY += 4;
+                charY -= 4;
                     y += 4;
                 }
             }
@@ -579,9 +609,11 @@ window.onload = function() {
             if (mapX > -900) {
                 if (keyS || keyW) {
                     mapX -= 3;
+                    charX += 3;
                     x -= 3;
                 } else {
                     mapX -= 4;
+                    charX += 4;
                     x -= 4;
                 }
             }
@@ -590,9 +622,11 @@ window.onload = function() {
             if (mapX < 900) {
             if (keyS || keyW) {
                 mapX += 3;
+                charX -= 3;
                 x += 3;
             } else {
                 mapX += 4;
+                charX -= 4;
                 x += 4;
                 }
             }
