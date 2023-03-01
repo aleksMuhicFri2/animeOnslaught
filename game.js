@@ -242,23 +242,7 @@ window.onload = function() {
             }})
     })
 
-    function checkForCollision() { // pomoje dela zdej idk
-        let hittingWall = false;
-        boundaries.forEach(boundary => {
-            if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
-                charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48) {
-                console.log("collision");
-                if(!hittingWall){
-                    hittingWall = true;
-                    return hittingWall;
-                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
-                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48)) {
-                    hittingWall = false;
-                }
-            }
-        })
-        return hittingWall;
-    }
+
 
     function createMap(){
         canvas.height = window.innerHeight * 2;
@@ -575,7 +559,7 @@ window.onload = function() {
                 mapX -= 4;
             }
         }
-        if (keyA) {
+        if (keyA && !checkForCollision()) {
             if (keyS || keyW) {
                 boundaries.forEach(boundary => {
                     boundary.position.x += 3;
