@@ -1,5 +1,7 @@
 .body{
     overflow: hidden;
+    height: 5000px;
+    width: 5000px;
     background-color: black;
 }
 
@@ -246,6 +248,9 @@ input[type = "submit"]:hover {
     top: 0;
 }
 #backgroundImg {
+    position: absolute;
+    left: -50px;
+    top: -150px;
     height: 1500px;
     width: 2000px;
 }

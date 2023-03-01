@@ -134,6 +134,7 @@ window.onload = function() {
 
     //slika characterja
     const characterImg = document.getElementById("characterImg");
+    const map = document.getElementById("backgroundImg");
     //==============================================KONSTANTE ZA ANIMACIJE IN QUALITY OF LIFE============================================
 
     let animationIndex = 0; //for animation purposes(glej spodaj)
@@ -202,7 +203,7 @@ window.onload = function() {
     }
 
 //=======================================================DODAJANJE OZADJA IN COLLISIONS==================================================================
-    let mapX = 0;
+    let mapX = -50;
     let mapY = -150;
     let charX = 950;
     let charY = 530;
@@ -567,7 +568,7 @@ window.onload = function() {
             animationIndex++;
         }
         if (keyS) {
-            if(mapY > -680){
+            if(mapY > -895){
             if (keyA || keyD) {
                 mapY -= 3;
                 charY += 3;
@@ -593,7 +594,7 @@ window.onload = function() {
             }
         }
         if (keyD) {
-            if (mapX > -900) {
+            if (mapX > -1010) {
                 if (keyS || keyW) {
                     mapX -= 3;
                     charX += 3;
@@ -620,10 +621,8 @@ window.onload = function() {
         }
         //ctx.drawImage(map, mapX, mapY);
         premakniEnemy(x, y);
-        enemies.forEach(function(enemy){
-            let src = dolociSmerEnemyev();
-            //ctx.drawImage(src, enemy.posX, enemy.posY, 150, 150);
-        })
+        map.style.top = mapY + "px";
+        map.style.left = mapX + "px";
     }
 
     //funkcija ki characterju spreminja animacijo
