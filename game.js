@@ -331,6 +331,7 @@ window.onload = function() {
         document.body.appendChild(missile);
     }
 
+
     function createImage(image) {
         console.log(`${image.counter} , ${image.type} , ${image.src} , ${image.top} , ${image.left} , ${image.angle} , ${image.user} ,`)
         let missile = document.createElement("img");
