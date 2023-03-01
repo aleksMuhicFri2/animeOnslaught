@@ -206,7 +206,7 @@ window.onload = function() {
     let mapX = -50;
     let mapY = -150;
     let charX = 950;
-    let charY = 530;
+    let charY = 630;
 
 
 //===============================================================ENEMIES===============================================================
@@ -257,14 +257,15 @@ window.onload = function() {
     }
 
     function enemyUpdate(enemy){
-        enemyAttack();
-        enemyMove();
+        //enemyAttack();
+       // enemyMove();
 
     }
 
     function enemyAttack(enemy){
 
     }
+
     function enemyMove(enemy, enemyObject, char){
         let razdalja = vrniRazdaljo(enemy.left, char.posX, enemy.top, char.posY);
         console.log(razdalja);
@@ -431,6 +432,8 @@ window.onload = function() {
     });
 
     //============================================================MOUSECLICK========================================================================
+
+    //doloci abilitije za vsakega characterja
     document.addEventListener("click", function (){
         if(weAreInGame){
             if (spaceCooldownCounter > 80) {
@@ -568,7 +571,7 @@ window.onload = function() {
             animationIndex++;
         }
         if (keyS) {
-            if(mapY > -895){
+            if(mapY > -800){
             if (keyA || keyD) {
                 mapY -= 3;
                 charY += 3;
@@ -581,7 +584,7 @@ window.onload = function() {
             }
         }
         if (keyW) {
-            if (mapY < 490) {
+            if (mapY < 600) {
             if (keyA || keyD) {
                     mapY += 3;
                     charY -= 3;
@@ -594,7 +597,7 @@ window.onload = function() {
             }
         }
         if (keyD) {
-            if (mapX > -1010) {
+            if (mapX > -1000) {
                 if (keyS || keyW) {
                     mapX -= 3;
                     charX += 3;
@@ -621,6 +624,7 @@ window.onload = function() {
         }
         //ctx.drawImage(map, mapX, mapY);
         premakniEnemy(x, y);
+        console.log(charX + ", " +  charY);
         map.style.top = mapY + "px";
         map.style.left = mapX + "px";
     }

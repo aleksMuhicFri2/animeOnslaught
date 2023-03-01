@@ -233,7 +233,7 @@ input[type = "submit"]:hover {
 
 #characterImg{
     position: absolute;
-    top: 535px;
+    top: 635px;
     left: 950px;
     transform: translate(-50%, -50%);
     width: 70px;
