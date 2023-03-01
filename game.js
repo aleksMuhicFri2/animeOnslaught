@@ -481,9 +481,6 @@ window.onload = function() {
                     updateAnimationAndMove(keyA, keyS, keyW, keyD);
                     updateDirection();
                     checkForCollision();
-                    boundaries.forEach(function(boundary){
-                        boundary.draw();
-                    })
                 }, 20);
                 updateP = true;
             }
