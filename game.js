@@ -212,18 +212,18 @@ window.onload = function() {
     let mapX = 0;
     let mapY = -150;
     let charX = 950; //offset za pravilni collision
-    let charY = 535;
+    let charY = 530;
 
     let collisionsMap = [];
-    for(let i = 0; i < collisionsData.length; i += 100){
-        collisionsMap.push(collisionsData.slice(i, 100 + i));
+    for(let i = 0; i < collisionsData.length; i += 60){
+        collisionsMap.push(collisionsData.slice(i, 60 + i));
     }
 
     class Boundary {
         constructor({position}){
             this.position = position;
-            this.width = 48;
-            this.height = 48;
+            this.width = 32;
+            this.height = 32;
         }
         draw() {
             ctx.fillStyle = "red";
@@ -234,10 +234,10 @@ window.onload = function() {
     const boundaries = []; // kje so collisioni
     collisionsMap.forEach((row, i) => {
         row.forEach((symbol, j) => {
-            if(symbol === 2032){
+            if(symbol === 832){
                 boundaries.push(new Boundary({position: {
-                        x: j * 48 + mapX,
-                        y: i * 48 + mapY
+                        x: j * 32 + mapX,
+                        y: i * 32 + mapY
                     }}))
             }})
     })
@@ -245,14 +245,14 @@ window.onload = function() {
     function checkForCollision() { // pomoje dela zdej idk
         let hittingWall = false;
         boundaries.forEach(boundary => {
-            if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
-                charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48) {
+            if (charX + 30 >= boundary.position.x && charX <= boundary.position.x + 32 &&
+                charY + 30 >= boundary.position.y && charY <= boundary.position.y + 32) {
                 console.log("collision");
                 if(!hittingWall){
                     hittingWall = true;
                     return hittingWall;
-                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 48 &&
-                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 48)) {
+                } else if(!(charX + 30 >= boundary.position.x && charX <= boundary.position.x + 32 &&
+                    charY + 30 >= boundary.position.y && charY <= boundary.position.y + 32)) {
                     hittingWall = false;
                 }
             }
@@ -263,7 +263,7 @@ window.onload = function() {
     function createMap(){
         canvas.height = window.innerHeight * 2;
         canvas.width = window.innerWidth * 2;
-        map.src = "slike/map.png"
+        map.src = "slike/tiled.png"
         map.onload = () => {
             ctx.drawImage(map, mapX, mapY);
         }
@@ -473,7 +473,7 @@ window.onload = function() {
     })
 
 //============================================================KEYDOWN========================================================================
-    document.addEventListener("keydown", function (event) {
+    document.addEventListener("keypress", function (event) {
         if (event.key === "a" || event.key === "d" || event.key === "s" || event.key === "w") {
             //seta interval za updatanje pozicije
             if (!updateP) {
@@ -491,38 +491,25 @@ window.onload = function() {
             //razni keydowni
             if (event.key === "a") {
                 if (!keyA) {
-                    if(checkForCollision()){
-                        keyA = false;
-                        mapX += 4;
-                    }
-                    keyA = true;
+                    keyA = !checkForCollision();
                 }
             }
             if (event.key === "d") {
                 if (!keyD) {
-                    if(checkForCollision()){
-                        keyD = false;
-                        mapX -= 4;
-                    }
-                    keyD = true;
+                    console.log(mapX);
+                    keyD = !checkForCollision();
                 }
             }
             if (event.key === "w") {
                 if (!keyW) {
-                    if(checkForCollision()){
-                        keyW = false;
-                        mapY += 4;
-                    }
-                    keyW = true;
+                    console.log(mapY);
+                    keyW = !checkForCollision();
                 }
             }
             if (event.key === "s") {
                 if (!keyS) {
-                    if(checkForCollision()){
-                        keyS = false;
-                        mapY -= 4;
-                    }
-                    keyS = true;
+                    console.log(mapY);
+                    keyS = !checkForCollision();
                 }
             }
         }
@@ -616,6 +603,7 @@ window.onload = function() {
         return Math.atan2(yDiff, xDiff) * 180 / Math.PI;
     }
 
+
     //funkcija update, ki glede na pritisnjene keye spreminja animacijo in pozicijo
     function updateAnimationAndMove(keyA, keyS, keyW, keyD) {
         let x = 0;//za premikanje slik z ozadjem
@@ -626,71 +614,71 @@ window.onload = function() {
             animationIndex++;
         }
         if (keyS) {
+            if(!checkForCollision() && mapY > -680){
             if (keyA || keyD) {
                 boundaries.forEach(boundary => {
                     boundary.position.y -= 3;
                 })
                 mapY -= 3;
-                charY -= 3;
                 y -= 3;
-            } else {
+            } else{
                 boundaries.forEach(boundary => {
                     boundary.position.y -= 4;
                 })
                 mapY -= 4;
-                charY -= 4;
                 y -= 4;
+                }
             }
         }
         if (keyW) {
+            if (!checkForCollision() && mapY < 490) {
             if (keyA || keyD) {
-                boundaries.forEach(boundary => {
-                    boundary.position.y += 3;
-                })
-                mapY += 3;
-                charY += 3;
-                y += 3;
-            } else {
-                boundaries.forEach(boundary => {
-                    boundary.position.y += 4;
-                })
-                mapY += 4;
-                charY += 4;
-                y += 4;
+                    boundaries.forEach(boundary => {
+                        boundary.position.y += 3;
+                    })
+                    mapY += 3;
+                    y += 3;
+                } else {
+                    boundaries.forEach(boundary => {
+                        boundary.position.y += 4;
+                    })
+                    mapY += 4;
+                    y += 4;
+                }
             }
         }
         if (keyD) {
-            if (keyS || keyW) {
-                boundaries.forEach(boundary => {
-                    boundary.position.x -= 3;
-                })
-                mapX -= 3;
-                charX -= 3;
-                x -= 3;
-            } else {
-                boundaries.forEach(boundary => {
-                    boundary.position.x -= 4;
-                })
-                mapX -= 4;
-                charX -= 4;
-                x -= 4;
+            if (!checkForCollision() && mapX > -900) {
+                if (keyS || keyW) {
+                    boundaries.forEach(boundary => {
+                        boundary.position.x -= 3;
+                    })
+                    mapX -= 3;
+                    x -= 3;
+                } else {
+                    boundaries.forEach(boundary => {
+                        boundary.position.x -= 4;
+                    })
+                    mapX -= 4;
+                    x -= 4;
+                }
             }
         }
         if (keyA) {
+            if (!checkForCollision() && mapX < 900) {
             if (keyS || keyW) {
                 boundaries.forEach(boundary => {
                     boundary.position.x += 3;
                 })
                 mapX += 3;
-                charX += 3;
                 x += 3;
             } else {
                 boundaries.forEach(boundary => {
                     boundary.position.x += 4;
                 })
                 mapX += 4;
-                charX += 4;
                 x += 4;
+                }
             }
         }
         ctx.drawImage(map, mapX, mapY);
