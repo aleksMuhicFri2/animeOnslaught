@@ -408,7 +408,6 @@ window.onload = function() {
                 intervalUpdate = setInterval(function () {
                     updateAnimationAndMove(keyA, keyS, keyW, keyD);
                     updateDirection();
-                    checkForCollision();
                     boundaries.forEach(function(boundary){
                         boundary.draw();
                     })
